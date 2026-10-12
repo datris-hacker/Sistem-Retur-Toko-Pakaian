@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retur — Sistem Retur Toko Pakaian</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <button class="hamburger" id="btnHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title">
+      <span class="brand-dot"></span>
+      Sistem Retur — Toko Pakaian
+    </div>
+    <div class="topbar-user">Admin</div>
+  </header>
+
+    <aside class="sidebar" id="sidebar">
+    <nav class="nav">
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">▦</span> Dashboard
+      </a>
+      <a href="transaksi.html" class="nav-item">
+        <span class="nav-icon">▤</span> Transaksi
+      </a>
+      <a href="retur.html" class="nav-item active">
+        <span class="nav-icon">↺</span> Retur
+      </a>
+      <a href="akuntansi.html" class="nav-item">
+        <span class="nav-icon">∑</span> Akuntansi
+      </a>
+    </nav>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+
+    <div class="page-header">
+      <h1>Retur Pakaian</h1>
+      <p>Kelola pengajuan retur pelanggan.</p>
+    </div>
+
+    <!-- TOOLBAR -->
+    <section class="card toolbar">
+      <input
+        type="text"
+        id="inputSearchRetur"
+        class="input"
+        placeholder="🔍 Cari ID retur atau nama pelanggan..."
+      />
+      <select id="filterStatusRetur" class="input select">
+        <option value="">Semua Status</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="completed">Completed</option>
+      </select>
+      <button class="btn btn-primary" id="btnBukaFormRetur">+ Ajukan Retur</button>
+    </section>
+
+    <!-- TABEL -->
+    <section class="card">
+      <div class="table-wrap">
+        <table class="table" id="tabelRetur">
+          <thead>
+            <tr>
+              <th>ID Retur</th>
+              <th>ID Transaksi</th>
+              <th>Pelanggan</th>
+              <th>Tanggal</th>
+              <th>Alasan</th>
+              <th>Status</th>
+              <th class="text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyRetur">
+            <tr><td colspan="7" class="loader">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================= -->
+  <!-- MODAL FORM AJUKAN RETUR -->
+  <!-- ============================= -->
+  <div class="modal" id="modalFormRetur">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Ajukan Retur Baru</h3>
+        <button class="modal-close" data-close="modalFormRetur">×</button>
+      </div>
+      <form class="modal-body" id="formRetur" novalidate>
+
+        <div class="form-group">
+          <label for="fIdTransaksi">ID Transaksi <span class="req">*</span></label>
+          <select id="fIdTransaksi" class="input select" required>
+            <option value="">— Pilih Transaksi —</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fPelanggan">Pelanggan</label>
+          <input type="text" id="fPelanggan" class="input" readonly placeholder="(otomatis)" />
+        </div>
+
+        <div class="form-group">
+          <label for="fTanggalRetur">Tanggal Retur <span class="req">*</span></label>
+          <input type="date" id="fTanggalRetur" class="input" required />
+        </div>
+
+        <div class="form-group">
+          <label for="fAlasan">Alasan Retur <span class="req">*</span></label>
+          <textarea id="fAlasan" class="input" rows="3" required
+            placeholder="Contoh: Ukuran tidak sesuai"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fKeterangan">Keterangan</label>
+          <textarea id="fKeterangan" class="input" rows="2"
+            placeholder="Opsional"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fStatus">Status <span class="req">*</span></label>
+          <select id="fStatus" class="input select" required>
+            <option value="pending" selected>Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="modalFormRetur">Batal</button>
+        <button class="btn btn-primary" id="btnSimpanRetur">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= -->
+  <!-- MODAL DETAIL RETUR -->
+  <!-- ============================= -->
+  <div class="modal" id="modalDetailRetur">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Detail Retur</h3>
+        <button class="modal-close" data-close="modalDetailRetur">×</button>
+      </div>
+      <div class="modal-body" id="detailReturBody">
+        <!-- diisi JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="modalDetailRetur">Tutup</button>
+        <button class="btn btn-primary" id="btnSimpanStatus">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script type="module" src="js/retur.js"></script>
+</body>
+</html>

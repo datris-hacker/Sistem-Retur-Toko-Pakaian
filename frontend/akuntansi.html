@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akuntansi — Sistem Retur Toko Pakaian</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <button class="hamburger" id="btnHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-title">
+      <span class="brand-dot"></span>
+      Sistem Retur — Toko Pakaian
+    </div>
+    <div class="topbar-user">Admin</div>
+  </header>
+
+    <aside class="sidebar" id="sidebar">
+    <nav class="nav">
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">▦</span> Dashboard
+      </a>
+      <a href="transaksi.html" class="nav-item">
+        <span class="nav-icon">▤</span> Transaksi
+      </a>
+      <a href="retur.html" class="nav-item">
+        <span class="nav-icon">↺</span> Retur
+      </a>
+      <a href="akuntansi.html" class="nav-item active">
+        <span class="nav-icon">∑</span> Akuntansi
+      </a>
+    </nav>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+
+    <div class="page-header">
+      <h1>Akuntansi</h1>
+      <p>Chart of Accounts, jurnal umum, dan laporan keuangan.</p>
+    </div>
+
+    <!-- TAB NAVIGATION -->
+    <div class="tabs" id="tabsAkuntansi">
+      <button class="tab-btn active" data-tab="coa">COA</button>
+      <button class="tab-btn" data-tab="jurnal">Jurnal Umum</button>
+      <button class="tab-btn" data-tab="neracaSaldo">Neraca Saldo</button>
+      <button class="tab-btn" data-tab="bukuBesar">Buku Besar</button>
+    </div>
+
+    <!-- ============================= -->
+    <!-- TAB 1: COA -->
+    <!-- ============================= -->
+    <section class="tab-panel active" id="tab-coa">
+      <div class="card">
+        <div class="card-header">
+          <h2>Chart of Accounts</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Kode</th>
+                <th>Nama Akun</th>
+                <th>Tipe</th>
+                <th>Saldo Normal</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyCoa">
+              <tr><td colspan="4" class="loader">Memuat data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- TAB 2: JURNAL UMUM -->
+    <!-- ============================= -->
+    <section class="tab-panel" id="tab-jurnal">
+
+      <div class="card toolbar">
+        <button class="btn btn-primary" id="btnPostingPenjualan">Posting Semua Jurnal Penjualan</button>
+        <button class="btn btn-primary" id="btnPostingRetur">Posting Semua Jurnal Retur</button>
+        <button class="btn btn-secondary" id="btnRefreshJurnal">Refresh</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Daftar Jurnal Umum</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Referensi</th>
+                <th class="text-right">Total Debit</th>
+                <th class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyJurnal">
+              <tr><td colspan="5" class="loader">Memuat data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================= -->
+    <!-- TAB 3: NERACA SALDO -->
+    <!-- ============================= -->
+    <section class="tab-panel" id="tab-neracaSaldo">
+      <div class="card">
+        <div class="card-header">
+          <h2>Neraca Saldo</h2>
+          <span class="text-muted" id="neracaSaldoDate"></span>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Kode</th>
+                <th>Nama Akun</th>
+                <th>Tipe</th>
+                <th class="text-right">Debit</th>
+                <th class="text-right">Kredit</th>
+                <th class="text-right">Saldo</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyNeracaSaldo">
+              <tr><td colspan="6" class="loader">Memuat data...</td></tr>
+            </tbody>
+            <tfoot id="tfootNeracaSaldo"></tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- TAB 4: BUKU BESAR -->
+    <!-- ============================= -->
+    <section class="tab-panel" id="tab-bukuBesar">
+      <div class="card toolbar">
+        <select id="filterAkunBukuBesar" class="input select">
+          <option value="">— Pilih Akun —</option>
+        </select>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 id="judulBukuBesar">Buku Besar</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Referensi</th>
+                <th class="text-right">Debit</th>
+                <th class="text-right">Kredit</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyBukuBesar">
+              <tr><td colspan="5" class="empty">Pilih akun untuk melihat buku besar.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================= -->
+  <!-- MODAL DETAIL JURNAL -->
+  <!-- ============================= -->
+  <div class="modal" id="modalDetailJurnal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Detail Jurnal</h3>
+        <button class="modal-close" data-close="modalDetailJurnal">×</button>
+      </div>
+      <div class="modal-body" id="detailJurnalBody">
+        <!-- diisi JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="modalDetailJurnal">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script type="module" src="js/akuntansi.js"></script>
+</body>
+</html>
