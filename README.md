@@ -2,7 +2,7 @@
 
 Sistem informasi operasional dan akuntansi sederhana untuk toko pakaian. Aplikasi membantu mencatat pelanggan, transaksi penjualan, pengajuan retur, serta menyajikan laporan akuntansi dasar (COA, jurnal, buku besar, dan neraca saldo).
 
-**Demo web:** [Buka Sistem Retur & Akuntansi](https://datris-hacker.github.io/Sistem-Retur-Toko-Pakaian/)
+**Demo web:** [Sistem Retur & Akuntansi](https://datris-hacker.github.io/Sistem-Retur-Toko-Pakaian/)
 
 Demo di-host secara publik melalui GitHub Pages.
 
