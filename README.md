@@ -1,4 +1,4 @@
-# Sistem-Retur-Toko-Pakaian
+# Sistem Retur Toko Pakaian
 
 Sistem informasi operasional dan akuntansi sederhana untuk toko pakaian. Aplikasi membantu mencatat pelanggan, transaksi penjualan, pengajuan retur, serta menyajikan laporan akuntansi dasar (COA, jurnal, buku besar, dan neraca saldo).
 
